@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Http\CustomResponse as Response;
 
 class ApiController extends Controller
 {
@@ -33,9 +34,9 @@ class ApiController extends Controller
      */
     public function findAll($table)
     {
-        if (($table = Str::plural($table)) && $this->models_exists($table))
-            return Helpers::success(200, [$table => DB::table($table)->select('*')->get()]);
-        return Helpers::error(500, "La table " . $this->namespace . $table . " n'existe pas");
+        if (($table = Str::plural($table)) && $this->models_exists(Str::singular($table)))
+            return Response::success(200, [$table => DB::table(strtolower($table))->select('*')->get()]);
+        return Response::error(500, "La table " . $this->namespace . $table . " n'existe pas");
     }
 
 
@@ -50,8 +51,8 @@ class ApiController extends Controller
     public function findOneBy($table, $field, $value)
     {
         if (($table = Str::plural($table)) && $this->models_exists($table))
-            return Helpers::success(200, [$table => DB::table($table)->select('*')->where($field, $value)->first()]);
-        return Helpers::error(500, "La table " . $this->namespace . $table . " n'existe pas");
+            return Response::success(200, [$table => DB::table($table)->select('*')->where($field, $value)->first()]);
+        return Response::error(500, "La table " . $this->namespace . $table . " n'existe pas");
     }
 
 
@@ -79,13 +80,13 @@ class ApiController extends Controller
     {
         if (($table = Str::plural($table, 1)) && $this->models_exists($table)) {
             if (($data = $request->get('data')) === null)
-                return Helpers::error(400);
+                return Response::error(400);
             $class = $this->namespace . $table;
             $object = new $class($request->get('data'));
-            return $object->save() ? Helpers::success(201) : Helpers::error(500, "L'insertion a échoué");
+            return $object->save() ? Response::success(201) : Response::error(500, "L'insertion a échoué");
         }
 
-        return Helpers::error(500, "La table " . $this->namespace . $table . " n'existe pas");
+        return Response::error(500, "La table " . $this->namespace . $table . " n'existe pas");
     }
 
 
@@ -99,15 +100,15 @@ class ApiController extends Controller
      */
     public function update(Request $request, $table, $id)
     {
-        if (($table = Str::plural($table, 1)) && $this->models_exists($table)) {
+        if (($table = Str::plural($table)) && $this->models_exists(Str::singular($table))) {
             if (($data = $request->get('data')) === null)
-                return Helpers::error(400);
+                return Response::error(400);
             if (($object = DB::table($table)->select('*')->where("id", $id)->first()) === null)
-                return Helpers::error(404);
-            return $object->update($data) ? Helpers::success() : Helpers::error(500, "La mise à jour a échoué");
+                return Response::error(404);
+            return is_int(DB::table($table)->select('*')->where("id", $id)->update($data)) ? Response::success() : Response::error(500, "La mise à jour a échoué");
         }
 
-        return Helpers::error(500, "La table " . $this->namespace . $table . " n'existe pas");
+        return Response::error(500, "La table " . $this->namespace . $table . " n'existe pas");
     }
 
 
@@ -122,10 +123,10 @@ class ApiController extends Controller
     {
         if (($table = Str::plural($table, 1)) && $this->models_exists($table)) {
             if (($object = DB::table($table)->select('*')->where("id", $id)->first()) === null)
-                return Helpers::error(404);
-            return $object->delete() ? Helpers::success() : Helpers::error(500, "La suppression a échoué");
+                return Response::error(404);
+            return $object->delete() ? Response::success() : Response::error(500, "La suppression a échoué");
         }
 
-        return Helpers::error(500, "La table " . $this->namespace . $table . " n'existe pas");
+        return Response::error(500, "La table " . $this->namespace . $table . " n'existe pas");
     }
 }

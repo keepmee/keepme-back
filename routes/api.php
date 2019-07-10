@@ -29,6 +29,21 @@ Route::middleware(['cors'])->group(function () {
 
 
     Route::middleware(['jwt.auth'])->group(function () {
+
+        Route::get('/users/current', 'UserController@getCurrentUser'); // Get current user
+        Route::put('/users/{id}', 'UserController@update'); // Update current user
+
+        Route::get('/addresses/current', 'AddressController@getCurrentAddress'); // Get current address
+        Route::put('/addresses/{id}', 'AddressController@update'); // Update address
+
+        Route::get('/children/current', 'ChildrenController@getCurrentChildren'); // Get current user
+
+        Route::get('/koops/mine', 'PostController@getAllMine'); // Get current user
+        Route::get('/koop/available', 'PostController@findAllAvailable'); // Get all koops
+        Route::get('/koop/available', 'PostController@findAllAvailable'); // Get all koops
+        Route::post('/koop', 'PostController@store'); // Store koops
+        Route::put('/koop/validate/{id}', 'PostController@apply'); // Store koops
+
         /**
          * Routes génériques
          */

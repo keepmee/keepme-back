@@ -9,76 +9,73 @@
 namespace App;
 
 
+use Carbon\Carbon;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Helpers
 {
 
-    /**
-     * @var array $statusTexts Tableau de message en cas de statut personnalisé
-     */
-    private static $statusTexts = array(
-        "496" => "Request need HTTPS"
-    );
-
 
     /**
-     * Cette fonction permet d'envoyer une réponse
-     * au client après une requête
+     * Cette fonction est utilisé par tous les fichiers qui en ont besoin
+     * et permet d'écrire un message de log
      *
-     * Return response to client
+     * @var array $levels Niveaux de log autorisés
      *
-     * @param int $status Statut de la réponse
-     * @param mixed $data Données à envoyer avec la réponse
-     * @return \Illuminate\Http\JsonResponse
+     * @param string $level Niveau de log
+     * @param string $message Message de log
+     * @return mixed
      */
-    public static function response($status = 200, $data = null)
+    public static function log($level, $message)
     {
-        return response()->json([
-            "status" => $status,
-            "data"   => $data
-        ])->setStatusCode($status, isset(Response::$statusTexts[$status]) ? Response::$statusTexts[$status] : (isset(Helpers::$statusTexts[$status]) ? Helpers::$statusTexts[$status] : ''));
+        $levels = [
+            "emergency",
+            "alert",
+            "critical",
+            "error",
+            "warning",
+            "notice",
+            "info",
+            "debug"
+        ];
+        if (in_array($level, $levels)) {
+//            $user = UniqueAuthServiceProvider::user();
+            if (strtolower($level) === 'error')
+                self::logError($message);
+            return \Illuminate\Support\Facades\Log::$level(
+                "Lien : " . url()->full() . " - \nAdresse ip : " . \Request::ip() .
+                "\nMessage : $message\nHeure : " . (Carbon::now('Europe/Paris')->toTimeString()) . "\n"
+//                ($user !== false ? "Utilisateur : $user->email\n" : "")
+            );
+        }
+
+        return \Illuminate\Support\Facades\Log::error(url()->full() . " - Un mauvais type de niveau a été renseigné ($level) - $message");
     }
 
-
     /**
-     * Cette fonction permet d'envoyer une success réponse
-     * au client après une requête
+     * Ecrire les erreurs dans un fichier différent
      *
-     * Return response to client
-     *
-     * @param int $status Statut de la réponse
-     * @param mixed $data Données à envoyer avec la réponse
-     * @return \Illuminate\Http\JsonResponse
+     * @param $message
      */
-    public static function success($status = 200, $data = null)
+    public static function logError($message)
     {
-        return is_int($status) ? self::response($status, $data) : self::response(200, $status);
+        file_put_contents(config('app.__dir__') . '/storage/logs/error' . Carbon::now()->toDateString(), "\nMessage : $message", FILE_APPEND);
     }
 
-
-    /**
-     * Cette fonction permet d'envoyer une success réponse
-     * au client après une requête
-     *
-     * Return response to client
-     *
-     * @param int $status Statut de la réponse
-     * @param mixed $data Données à envoyer avec la réponse
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public static function error($status = 500, $data = null)
+    public static function toObject($array)
     {
-        if ($status === 400)
-            return self::response($status, ["error" => $data ?: "La requête est mal formée"]);
-        if ($status === 401)
-            return self::response($status, ["error" => $data ?: "Vous devez être connecté"]);
-        if ($status === 403)
-            return self::response($status, ["error" => $data ?: "Vous n'avez pas les droits"]);
-        if ($status === 404)
-            return self::response($status, ["error" => $data ?: "La ressource demandée n'existe pas"]);
-        if ($status === 405)
-            return self::response($status, ["error" => $data ?: "La ressource demandée n'existe pas"]);
-        return self::response($status, ["error" => $data ?: "Une erreur inconnue est survenue"]);
+        return is_array($array) ? json_decode(json_encode($array)) : null;
+    }
+
+    public static function getRequestData(Request $request, $param = 'data')
+    {
+        return self::toObject($request->get('data')) === null ? $request->get($param) : self::toObject($request->get($param));
+    }
+
+    public static function getCurrentUser()
+    {
+        return Auth::user();
     }
 }
