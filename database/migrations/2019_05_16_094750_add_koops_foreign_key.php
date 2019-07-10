@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateParentsTable extends Migration
+class AddKoopsForeignKey extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateParentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('parents', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('user_id')->unsigned();
-            $table->timestamps();
+        Schema::table('koops', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('nanny_id')->references('id')->on('nannies');
+            $table->foreign('address_id')->references('id')->on('addresses');
         });
     }
 
@@ -27,6 +27,6 @@ class CreateParentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('parents');
+        //
     }
 }

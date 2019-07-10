@@ -14,7 +14,12 @@ class CreateChildrensTable extends Migration
     public function up()
     {
         Schema::create('childrens', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->date('birthday')->nullable();
+            $table->text('notes')->nullable();
+            $table->bigInteger('parent_id')->unsigned();
             $table->timestamps();
         });
     }

@@ -14,7 +14,10 @@ class CreateNanniesTable extends Migration
     public function up()
     {
         Schema::create('nannies', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
+            $table->text('description')->nullable();
+            $table->boolean('is_verified')->default(false);
+            $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
         });
     }
