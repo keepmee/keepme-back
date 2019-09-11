@@ -22,11 +22,11 @@ class Helpers
      * Cette fonction est utilisé par tous les fichiers qui en ont besoin
      * et permet d'écrire un message de log
      *
-     * @var array $levels Niveaux de log autorisés
-     *
      * @param string $level Niveau de log
      * @param string $message Message de log
      * @return mixed
+     * @var array $levels Niveaux de log autorisés
+     *
      */
     public static function log($level, $message)
     {
@@ -71,11 +71,18 @@ class Helpers
 
     public static function getRequestData(Request $request, $param = 'data')
     {
-        return self::toObject($request->get('data')) === null ? $request->get($param) : self::toObject($request->get($param));
+        return self::toObject($request->get($param)) ?? $request->get($param);
     }
 
     public static function getCurrentUser()
     {
         return Auth::user();
+    }
+
+    public static function createUserName($user = null)
+    {
+        if ($user === null && Auth::user() === null || ($user = User::whereEmail(($user ?? Auth::user())->email)->first()) === null)
+            return null;
+        return substr($user->firstname, 0, 1) . trim($user->lastname);
     }
 }
