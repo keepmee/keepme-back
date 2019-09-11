@@ -15,13 +15,9 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('number')->nullable();
-            $table->integer('number_2')->nullable();
-            $table->string('street_type', 255)->nullable();
-            $table->string('street_name', 255)->nullable();
-            $table->string('street_name_2', 255)->nullable();
-            $table->integer('place_called')->nullable();
-            $table->integer('zipcode')->nullable();
+            $table->string('address_line1', 255)->nullable();
+            $table->string('address_line2', 255)->nullable();
+            $table->integer('postcode')->nullable();
             $table->string('country', 50)->default('FR');
             $table->string('city', 255)->nullable();
             $table->string('latitude', 50)->nullable();
