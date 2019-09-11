@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Helpers;
-use App\Models\User;
-use Carbon\Carbon;
+use App\Services\UserService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\CustomResponse as Response;
+use App\Services\Utils\ResponseService as Response;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -19,25 +19,15 @@ class UserController extends Controller
     /**
      * Mets à jour une donnée par id
      *
-     * @param Request $request
-     * @param $table
+     * @param UserService $service
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(UserService $service, $id)
     {
-        if (($data = $request->get('data')) === null)
-            return Response::error(400);
-
-        if (($user = User::where('id', $id)->first()) === null)
-            return Response::error(404);
-
-        if (Auth::user() === null || User::where('email', Auth::user()->email)->first() === null || User::where('email', Auth::user()->email)->first()->id === $id)
-            return Response::error(403, "error number 3");
-
-        if (isset($data['birthday'])) $data['birthday'] = Carbon::parse($data['birthday']);
-
-        return $user->update($data) ? Response::success() : Response::error(500, "La mise à jour a échoué");
+        return is_array($result = $service->update(Auth::user(), Helpers::getRequestData(request()), $id))
+            ? Response::error($result['code'], $result['message'])
+            : Response::success($result);
 
     }
 }

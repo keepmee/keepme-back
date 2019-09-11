@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers;
+use App\Http\Controllers\AuthController;
+use App\Services\Auth\RegisterService;
+use App\Services\Utils\LogService as Log;
+use App\Services\Utils\ResponseService as Response;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
-class RegisterController extends Controller
+class RegisterController extends AuthController
 {
     /*
     |--------------------------------------------------------------------------
@@ -40,17 +46,43 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function register(RegisterService $service)
+    {
+        Log::info("Tentative d'inscription");
+
+        if (($data = Helpers::getRequestData(request())) === null)
+            return Response::error(401, "Veuillez renseigner des informations");
+
+//        Log::info("Identifiants de connexion : " . $data->email ?? null);
+        if (($token = $service->register($data)) === null)
+            return Response::error(401);
+
+        Log::info("Vérification d'un erreur potentielle");
+        if (is_array($token) && isset($token['code']) && $token['code'] > 400)
+            return Response::error($token['code'], $token['message']);
+
+        Log::info($data->email . " est connecté");
+        return $this->respondWithToken($token);
+    }
+
+    public function confirm(RegisterService $service, $key)
+    {
+        if (is_array($result = $service->confirm($key)))
+            return Response::error($result['code'], $result['message']);
+        return RedirectResponse::create(config('api.url.authorized') . "/#/login");
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
     }
@@ -58,14 +90,14 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\User
      */
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'name'     => $data['name'],
+            'email'    => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
     }

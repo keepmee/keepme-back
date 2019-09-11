@@ -3,58 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Helpers;
-use App\Http\CustomResponse as Response;
+use App\Services\KoopService;
+use \App\Services\Utils\ResponseService as Response;
 use App\Models\Children;
 use App\Models\Address;
 use App\Models\Koop;
 use App\Models\Nanny;
-use App\Models\User;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth; //use this library
 
-class PostController extends Controller
+class KoopController extends Controller
 {
-    public function store(Request $request)
+    public function store(KoopService $service)
     {
-        $data = Helpers::getRequestData($request);
-
-        Helpers::log("info", json_encode($data));
-
-        $children = [];
-
-        /*if ($data->children && $data->children !== null)
-            foreach ($data->children as $child) {
-                if (($tmp = Children::where('id', $child)->first()) !== null)
-                    $children[] = $tmp->id;
-            }*/
-
-        $user = auth('api')->user();
-//        return CustomResponse::success(200, json_encode(auth('api')->user()));
-//        Helpers::log("info", json_encode($user));
-//        exit();
-//        if (($address = Address::where('')->first()) !== null)
-        $obj = [
-            "title"       => $data->title ?? '',
-            "description" => $data->description ?? '',
-            "note"        => $data->note ?? 0,
-            "start"       => Carbon::parse($data->start),
-            "end"         => Carbon::parse($data->end),
-            "rate"        => $data->rate ?? 0,
-            "recurrent"   => $data->recurrent ?? false,
-            "children"    => json_encode($children),
-            "user_id"     => Auth::user()->id ?? '',
-            "address_id"  => 1,
-//                "address_id"  => $address->id,
-        ];
-        $koop = new Koop($obj);
-
-        return $koop->save() ? Response::success() : Response::error();
+        return is_array($result = $service->store(Auth::user(), Helpers::getRequestData(request())))
+            ? Response::error($result['code'], $result['message'])
+            : Response::success($result);
 
     }
 
-    public function getAllMine()
+    /*public function getAllMine()
     {
         if (Auth::user() === null || ($koops = Koop::where('user_id', Auth::user()->id)->get()) === null)
             return Response::success();
@@ -69,9 +40,9 @@ class PostController extends Controller
             }
         }
         return Response::success(200, ['koops' => $koops]);
-    }
+    }*/
 
-    public function findAll($all = true)
+    /*public function findAll($all = true)
     {
         if (($koops = ($all ? Koop::all() : Koop::where('nanny_id', null)->get())) === null)
             return Response::success();
@@ -88,12 +59,20 @@ class PostController extends Controller
 
         return Response::success(200, ['koops' => $koops]);
 
+    }*/
+
+    public function findAllMine(KoopService $service)
+    {
+        return is_array($result = $service->findAllMine(\Auth::user()))
+            ? Response::error($result['code'], $result['message'])
+            : Response::success(['koops' => $result]);
     }
 
-    public function findAllAvailable()
+    public function findAllAvailable(KoopService $service)
     {
-        return $this->findAll(false);
-
+        return is_array($result = $service->findAllAvailable(\Auth::user()))
+            ? Response::error($result['code'], $result['message'])
+            : Response::success(['koops' => $result]);
     }
 
     public function apply(Request $request, $id)

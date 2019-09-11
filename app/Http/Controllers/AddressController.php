@@ -4,28 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Helpers;
 use App\Models\Address;
-use App\Models\User;
+use App\Services\AddressService;
+use App\User;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\CustomResponse as Response;
+use App\Services\Utils\ResponseService as Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AddressController extends Controller
 {
-    public function getCurrentAddress()
+    public function getCurrentAddress(AddressService $service)
     {
-        if (($user = Auth::user()) === null)
-            return Response::error(401);
-
-        if (($user = User::where('email', $user->email)->first()) === null)
-            return Response::error(403);
-
-        if ($user->address_id === null)
-            return Response::success(['address' => json_decode("{}")]);
-
-        $address = Address::where('id', $user->address_id)->first();
-        return Response::success(['address' => ($address === null ? json_decode("{}") : $address)]);
+        return is_array($result = $service->getUserAddress(Auth::user()))
+            ? Response::error($result['code'], $result['message'])
+            : Response::success(["address" => $result]);
     }
 
     /**
@@ -59,5 +53,12 @@ class AddressController extends Controller
         return Response::success();
 //        return DB::table('addresses')->where('id', $id)->updateOrInsert($data) ? Response::success() : Response::error(500, "La mise à jour a échoué");
 
+    }
+
+    public function getUserLocation(AddressService $service)
+    {
+        return is_array($result = $service->getUserLocation(Auth::user()))
+            ? Response::error($result['code'], $result['message'])
+            : Response::success($result);
     }
 }

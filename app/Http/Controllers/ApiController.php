@@ -121,7 +121,7 @@ class ApiController extends Controller
      */
     public function delete($table, $id)
     {
-        if (($table = Str::plural($table, 1)) && $this->models_exists($table)) {
+        if (($table = Str::plural($table)) && $this->models_exists($table)) {
             if (($object = DB::table($table)->select('*')->where("id", $id)->first()) === null)
                 return Response::error(404);
             return $object->delete() ? Response::success() : Response::error(500, "La suppression a échoué");

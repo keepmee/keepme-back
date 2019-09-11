@@ -32,7 +32,8 @@ class CorsMiddleware
 
         if ($request->getMethod() == "OPTIONS") {
             return response(['OK'], 200)->withHeaders([
-                'Access-Control-Allow-Origin'      => config('api.url.authorized'),
+                'Access-Control-Allow-Origin'      => "*",
+//                'Access-Control-Allow-Origin'      => config('api.url.authorized'),
                 'Access-Control-Allow-Methods'     => 'GET, POST, PUT, DELETE',
                 'Access-Control-Allow-Credentials' => true,
                 'Access-Control-Allow-Headers'     => 'Authorization, Application, Content-Type, Origin',
@@ -40,7 +41,8 @@ class CorsMiddleware
         }
 
         return $next($request)
-            ->header('Access-Control-Allow-Origin', config('api.url.authorized'))
+            ->header('Access-Control-Allow-Origin', "*")
+//            ->header('Access-Control-Allow-Origin', config('api.url.authorized'))
             ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
             ->header('Access-Control-Allow-Credentials', true)
             ->header('Access-Control-Allow-Headers', 'Authorization, Application, Content-Type, Origin');
