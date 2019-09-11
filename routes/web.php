@@ -17,3 +17,8 @@ Route::get('/test', function () {
     echo Str::plural('table');
 });
 
+Route::get('/register/confirm/{key}', 'Auth\\RegisterController@confirm');
+Route::get('/password/reset/{token}', 'Auth\\PasswordController@verifyToken');
+
+Route::get('/koop/applied/{id}/{token}', 'KoopApplicationController@applied');
+

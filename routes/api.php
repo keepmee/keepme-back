@@ -19,12 +19,28 @@ Route::middleware(['cors'])->group(function () {
     /**
      * Routes authentification
      */
-    Route::post('/register', 'AuthController@register'); // Register
-    Route::post('/login', 'AuthController@login'); // Login
+    Route::post('/register', 'Auth\\RegisterController@register'); // Register
+    Route::post('/login', 'Auth\\LoginController@login'); // Login
     Route::post('/logout', 'AuthController@logout'); // Logout
 
+    Route::post('/password/forgot', 'Auth\\PasswordController@forgot'); // Password forgot
+    Route::post('/password/reset', 'Auth\\PasswordController@reset'); // Password forgot
+    Route::put('/password/users/{id}', 'Auth\\PasswordController@update'); // Password forgot
+
+    Route::get('/logged', 'AuthController@logged'); // Check if current user is logged
+    Route::get('/nannied', 'AuthController@nannied'); // Check if current user is logged
+
+    Route::post('/mail/contact', 'MailController@contact'); // Contact us
+
     Route::get('/test', function (Request $request) {
-        return response()->json('response : ok');
+//        var_dump(\Carbon\Carbon::now());
+        $user = \App\User::first();
+        $collection = collect($user->notifications);
+//        var_dump($user->notifications->items);
+        return ($collection->filter(function ($value, $key) use ($user) {
+            var_dump($value->data['parent']['id']);
+            return $value->type === "App\\Notifications\\KoopApplicationNotification";
+        }));/*view('pages.emails.koop.applied');*/
     })->name('test');
 
 
@@ -34,15 +50,26 @@ Route::middleware(['cors'])->group(function () {
         Route::put('/users/{id}', 'UserController@update'); // Update current user
 
         Route::get('/addresses/current', 'AddressController@getCurrentAddress'); // Get current address
+        Route::get('/address/current/location', 'AddressController@getUserLocation'); // Get user location
         Route::put('/addresses/{id}', 'AddressController@update'); // Update address
 
         Route::get('/children/current', 'ChildrenController@getCurrentChildren'); // Get current user
+        Route::post('/children', 'ChildrenController@store'); // Store child
+        Route::put('/children/{id}', 'ChildrenController@update'); // Update child
+        Route::delete('/children/{id}', 'ChildrenController@delete'); // Update child
 
-        Route::get('/koops/mine', 'PostController@getAllMine'); // Get current user
-        Route::get('/koop/available', 'PostController@findAllAvailable'); // Get all koops
-        Route::get('/koop/available', 'PostController@findAllAvailable'); // Get all koops
-        Route::post('/koop', 'PostController@store'); // Store koops
-        Route::put('/koop/validate/{id}', 'PostController@apply'); // Store koops
+        Route::get('/koops/mine', 'KoopController@findAllMine'); // Get all user koops
+        Route::get('/koops/available', 'KoopController@findAllAvailable'); // Get all available koops
+//        Route::get('/koop/available', 'KoopController@findAllAvailable'); // Get all koops
+        Route::post('/koop', 'KoopController@store'); // Store koops
+        Route::put('/koop/validate/{id}', 'KoopController@apply'); // Store koops
+
+        Route::post('/koop/apply/{id}', 'KoopApplicationController@apply'); // Apply to koops
+
+        Route::get('/notifications', 'NotificationController@all');
+
+        Route::get('/diplomas/mine', 'DiplomaController@mine');
+        Route::post('/diploma', 'DiplomaController@store');
 
         /**
          * Routes génériques
