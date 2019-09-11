@@ -12,16 +12,11 @@ class AddressesTableSeeder extends Seeder
     public function run()
     {
         \App\Models\Address::create([
-            "number"       => "7",
-            "number_2"     => null,
-            "street_type"  => "rue",
-            "street_name"  => "maurice grandcoing",
-            "place_called" => null,
-            "zipcode"      => "94200",
-            "country"      => "france",
-            "city"         => "ivry-sur-seine",
-            "latitude"     => "48.814040899999995",
-            "longitude"    => "2.3925461",
+            "address_line1" => "7 rue maurice grandcoing",
+            "postcode"      => "94200",
+            "city"          => "ivry-sur-seine",
+            "latitude"      => "48.814040899999995",
+            "longitude"     => "2.3925461",
         ]);
     }
 }
