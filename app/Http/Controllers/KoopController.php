@@ -63,9 +63,9 @@ class KoopController extends Controller
 
     public function findAllMine(KoopService $service)
     {
-        return is_array($result = $service->findAllMine(\Auth::user()))
-            ? Response::error($result['code'], $result['message'])
-            : Response::success(['koops' => $result]);
+        return Response::unknown(["koops" => $service->findAllMine(\Auth::user())]);
+//            ? Response::error($result['code'], $result['message'])
+//            : Response::success(['koops' => $result]);
     }
 
     public function findAllAvailable(KoopService $service)
@@ -73,6 +73,16 @@ class KoopController extends Controller
         return is_array($result = $service->findAllAvailable(\Auth::user()))
             ? Response::error($result['code'], $result['message'])
             : Response::success(['koops' => $result]);
+    }
+
+    public function getKoopByAuthorAndId(KoopService $service, $author, $id)
+    {
+        return Response::unknown($service->getKoopByAuthorAndId($author, $id));
+    }
+
+    public function getKoopsByLocation(KoopService $service, $latitude, $longitude, $radius)
+    {
+        return Response::unknown($service->getKoopsByLocation($latitude, $longitude, $radius));
     }
 
     public function apply(Request $request, $id)
