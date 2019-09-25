@@ -9,6 +9,7 @@
 namespace App;
 
 
+use App\Services\Utils\LogService;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
@@ -84,5 +85,14 @@ class Helpers
         if ($user === null && Auth::user() === null || ($user = User::whereEmail(($user ?? Auth::user())->email)->first()) === null)
             return null;
         return substr($user->firstname, 0, 1) . trim($user->lastname);
+    }
+
+    public static function distance($lat1, $lon1, $lat2, $lon2, $unit = "K")
+    {
+        if (($lat1 === $lat2) && ($lon1 === $lon2))
+            return 0;
+        $dist = rad2deg(acos(sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($lon1 - $lon2))));
+        $kilometers = $dist * 60 * 1.1515 * 1.609344;
+        return (float)round((($unit = strtoupper($unit)) === "M" ? ($kilometers * 1000) : $kilometers), 2);
     }
 }
