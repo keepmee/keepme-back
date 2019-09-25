@@ -24,17 +24,19 @@ class KoopApplicationNotification extends Notification
     /**
      * Create a new notification instance.
      *
-     * @param User $parent
-     * @param Nanny $nanny
      * @param Koop $koop
+     * @param Nanny $nanny
      */
-    public function __construct(User $parent, Nanny $nanny, Koop $koop)
+    public function __construct(Koop $koop, Nanny $nanny)
     {
+        $koop = Koop::format($koop);
         $this->details = Helpers::toObject([
-            "parent" => $parent,
-            "nanny"  => $nanny,
-            "koop"   => $koop
-        ]);
+                "users"  => Helpers::toObject(["writer" => User::whereId($nanny->user_id)->first(), "main" => $koop['author']]),
+                "parent" => $koop['author'],
+                "nanny"  => $nanny,
+                "koop"   => $koop,
+            ]
+        );
     }
 
     /**
@@ -68,6 +70,7 @@ class KoopApplicationNotification extends Notification
     public function toArray($notifiable)
     {
         return [
+            'users'  => $this->details->users,
             'parent' => $this->details->parent,
             'nanny'  => $this->details->nanny,
             'koop'   => $this->details->koop,
