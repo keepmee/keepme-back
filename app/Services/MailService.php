@@ -3,6 +3,10 @@
 
 namespace App\Services;
 
+use App\Models\Koop;
+use App\Models\Nanny;
+use App\Models\Parents;
+use App\User;
 use Illuminate\Mail\Message;
 use Illuminate\Notifications\Messages\MailMessage;
 use Mail;
@@ -74,6 +78,20 @@ class MailService
             $message->subject("Nouvelle candidature à votre annonce");
         });*/
 
+    }
+
+    public function accept(Koop $koop, User $nanny, User $parent)
+    {
+        $content = $koop->author->lastname . " a accepté votre demande";
+        $total = (((int)explode("h", $koop->duration)[0]) + (((int)explode("h", $koop->duration)[1]) === 0 ? 0 : 1)) * $koop->rate;
+
+        Mail::send(['html' => 'pages.emails.koop.accept'], ["koop" => $koop, "nanny" => $nanny, "children" => $koop->enfants, "parent" => $parent, "total" => $total], function (Message $message) use ($content, $nanny) {
+            $message->to($nanny->email);
+            $message->subject("Nouveau message");
+            $message->setBody($content, "text/html");
+        });
+
+        return count(Mail::failures()) === 0;
     }
 
 }
