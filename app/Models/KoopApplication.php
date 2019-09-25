@@ -24,5 +24,5 @@ use Illuminate\Database\Eloquent\Model;
  */
 class KoopApplication extends Model
 {
-    //
+    protected $fillable = ['nanny_id', 'koop_id'];
 }
