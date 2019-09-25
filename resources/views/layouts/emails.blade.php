@@ -55,6 +55,14 @@
                 color: #cc0000 !important;
             }
 
+            .grey-text {
+                color: #9e9e9e !important
+            }
+
+            .font-italic {
+                font-style: italic !important
+            }
+
             .font-weight-bold {
                 font-weight: bold !important;
             }
@@ -107,6 +115,10 @@
                 font-family: SourceSansProLight, SourceSansProRegular, sans-serif
             }
 
+            .mb {
+                margin-bottom: 2em !important;
+            }
+
             .my-5 {
                 margin-top: 4em !important;
                 margin-bottom: 4em !important;
@@ -131,7 +143,8 @@
         <div id="app">
 
             <div class="container w-50 mx-auto">
-                <img src="{{ asset("/img/logo.png") }}" class="d-block mx-auto" alt="Logo" id="mailLogo"/>
+                <img src="{{ $message->embed(public_path() . '/img/logo.png') }}"
+                     class="d-block mx-auto" alt="Logo" id="mailLogo"/>
                 <hr>
             </div>
 
