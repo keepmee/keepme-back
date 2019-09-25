@@ -37,16 +37,14 @@ Route::middleware(['cors'])->group(function () {
         $user = \App\User::first();
         $collection = collect($user->notifications);
 //        var_dump($user->notifications->items);
-        return ($collection->filter(function ($value, $key) use ($user) {
-            var_dump($value->data['parent']['id']);
-            return $value->type === "App\\Notifications\\KoopApplicationNotification";
-        }));/*view('pages.emails.koop.applied');*/
+        return view('pages.emails.koop.accept');
     })->name('test');
 
 
     Route::middleware(['jwt.auth'])->group(function () {
 
         Route::get('/users/current', 'UserController@getCurrentUser'); // Get current user
+        Route::get('/user/{lastname}/{firstname}/{type}', 'UserController@getUserByNameAndType');
         Route::put('/users/{id}', 'UserController@update'); // Update current user
 
         Route::get('/addresses/current', 'AddressController@getCurrentAddress'); // Get current address
@@ -59,7 +57,9 @@ Route::middleware(['cors'])->group(function () {
         Route::delete('/children/{id}', 'ChildrenController@delete'); // Update child
 
         Route::get('/koops/mine', 'KoopController@findAllMine'); // Get all user koops
-        Route::get('/koops/available', 'KoopController@findAllAvailable'); // Get all available koops
+        Route::get('/koops/available', 'KoopController@findAllAvailable'); // Get my koops
+        Route::get('/koop/{author}/{id}', 'KoopController@getKoopByAuthorAndId');
+        Route::get('/koops/location/{latitude}/{longitude}/{radius}', 'KoopController@getKoopsByLocation');
 //        Route::get('/koop/available', 'KoopController@findAllAvailable'); // Get all koops
         Route::post('/koop', 'KoopController@store'); // Store koops
         Route::put('/koop/validate/{id}', 'KoopController@apply'); // Store koops
@@ -67,9 +67,17 @@ Route::middleware(['cors'])->group(function () {
         Route::post('/koop/apply/{id}', 'KoopApplicationController@apply'); // Apply to koops
 
         Route::get('/notifications', 'NotificationController@all');
+        Route::get('/notifications/limit', 'NotificationController@limit');
+        Route::get('/notifications/read', 'NotificationController@read');
+        Route::get('/notifications/unread', 'NotificationController@unread');
+        Route::get('/notifications/unread/{type}', 'NotificationController@unread');
+        Route::post('/notifications/accept/{id}', 'NotificationController@accept');
+        Route::post('/notifications/deny/{id}', 'NotificationController@deny');
 
         Route::get('/diplomas/mine', 'DiplomaController@mine');
         Route::post('/diploma', 'DiplomaController@store');
+
+        Route::post('/comments', 'CommentController@store');
 
         /**
          * Routes génériques
