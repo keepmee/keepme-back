@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Helpers;
+use App\Services\Utils\LogService;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -43,4 +47,37 @@ use Illuminate\Database\Eloquent\Model;
 class Koop extends Model
 {
     protected $fillable = ["title", "description", "note", "rate", "recurrent", "children", "user_id", "address_id", "start", "end", "nanny_id"];
+
+    public static function format(Koop $koop, $center = null)
+    {
+        if ($koop === null)
+            return null;
+
+        if (($address = Address::where('id', $koop->getAttributeValue('address_id'))->first()) !== null) {
+            $koop['location'] = ['lat' => ((double)$address->latitude), 'lng' => ((double)$address->longitude)];
+            $koop['address'] = $address;
+        }
+        if (($user = User::where('id', $koop->getAttributeValue('user_id'))->first()) !== null) {
+            $koop['author'] = $user;
+            unset($koop['author']->password);
+        }
+        if ($address !== null && ($addressTmp = Address::whereId(\Auth::user()->address_id)->first()) !== null)
+            $koop['distance'] = $center === null
+                ? Helpers::distance((double)$address->latitude, (double)$address->longitude, (double)$addressTmp->latitude, (double)$addressTmp->longitude)
+                : Helpers::distance((double)$center->latitude, (double)$center->longitude, (double)$addressTmp->latitude, (double)$addressTmp->longitude);
+        $koop['duration'] = Carbon::parse($koop->end)->diffInHours(Carbon::parse($koop->start)) . "h" . Carbon::parse($koop->end)->diff(Carbon::parse($koop->start))->format("%I");
+
+        $children = is_array($koop->children) ? $koop->children : json_decode($koop->children);
+        foreach ($children as $idx => $child) {
+            if (($tmp = Children::whereId($child)->first()) !== null)
+                $children[$idx] = $tmp;
+        }
+        $koop['enfants'] = $children;
+        $koop['children'] = $children;
+        $koop['nanny'] = $koop->nanny_id !== null ? Nanny::whereId($koop->nanny_id)->first() : null;
+
+        $koop['comments'] = Comment::findByKoopId($koop->id);
+
+        return $koop;
+    }
 }
