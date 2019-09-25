@@ -7,7 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use App\Http\CustomResponse as Response;
+use App\Services\Utils\ResponseService as Response;
 
 class ApiController extends Controller
 {
