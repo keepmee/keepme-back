@@ -16,6 +16,11 @@ class UserController extends Controller
         return Response::success(200, ['user' => Helpers::getCurrentUser()]);
     }
 
+    public function getUserByNameAndType(UserService $service, $lastname, $firstname, $type)
+    {
+        return Response::unknown($service->getUserByNameAndType($lastname, $firstname, $type));
+    }
+
     /**
      * Mets à jour une donnée par id
      *
