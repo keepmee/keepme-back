@@ -9,6 +9,7 @@
 namespace App;
 
 
+use App\Models\Address;
 use App\Services\Utils\LogService;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
@@ -93,6 +94,13 @@ class Helpers
             return 0;
         $dist = rad2deg(acos(sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($lon1 - $lon2))));
         $kilometers = $dist * 60 * 1.1515 * 1.609344;
-        return (float)round((($unit = strtoupper($unit)) === "M" ? ($kilometers * 1000) : $kilometers), 2);
+        return (float)round((($unit = strtoupper($unit)) === "M" ? ($kilometers * 1000.0) : $kilometers), 2);
+    }
+
+    public static function distanceBetweenAddresses(Address $address1, $address2, $unit = "K")
+    {
+        if ($address1 === null || $address2 === null)
+            return 0;
+        return self::distance((double)$address1->latitude, (double)$address1->longitude, (double)$address2->latitude, (double)$address2->longitude, $unit);
     }
 }
