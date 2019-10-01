@@ -70,9 +70,15 @@ class KoopController extends Controller
 
     public function findAllAvailable(KoopService $service)
     {
-        return is_array($result = $service->findAllAvailable(\Auth::user()))
+        return Response::unknown($service->findAllAvailable(\Auth::user()), 'koops');
+        /*return is_array($result = $service->findAllAvailable(\Auth::user()))
             ? Response::error($result['code'], $result['message'])
-            : Response::success(['koops' => $result]);
+            : Response::success(['koops' => $result]);*/
+    }
+
+    public function getKoopsByAuthor(KoopService $service, $author)
+    {
+        return Response::unknown($service->getKoopsByAuthor($author));
     }
 
     public function getKoopByAuthorAndId(KoopService $service, $author, $id)
