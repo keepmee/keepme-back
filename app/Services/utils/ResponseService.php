@@ -81,11 +81,11 @@ class ResponseService
         return self::response($status, ["error" => $data ?: "Une erreur inconnue est survenue"]);
     }
 
-    public static function unknown($data)
+    public static function unknown($data, $name = null)
     {
         return is_array($data) && (isset($data['error']) && $data['error'])
             ? self::error($data['code'] ?? 500, $data['message'] ?? $data)
-            : self::success($data);
+            : $name === null ? self::success($data) : self::success([$name => $data]);
     }
 
 }
