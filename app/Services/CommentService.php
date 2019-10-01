@@ -15,12 +15,10 @@ use Illuminate\Notifications\Notification;
 class CommentService
 {
 
-    public function store(User $user, $data)
+    public function store(User $user, $data, $notify = true)
     {
         if ($data === null || $data->comment === null)
             return ReturnServices::badRequest();
-
-//        return [$data->koop->author->id, $user->id];
 
         if (($tmp = Comment::whereKoopId($data->koop->id)->latest()->first()) === null)
             $targets = $user->id !== $data->koop->author->id ? [$user->id, $data->koop->author->id] : [$user->id];
@@ -40,7 +38,7 @@ class CommentService
 
         $koop = Koop::whereId($data->koop->id)->first();
         foreach ($targets as $target) {
-            if (($notifiable = User::whereId($target)->first()) !== null && ($user->email !== $notifiable->email))
+            if ($notify && ($notifiable = User::whereId($target)->first()) !== null && ($user->email !== $notifiable->email))
                 $notifiable->notify(new CommentNotification(
                     $comment,
                     $user,
@@ -51,15 +49,5 @@ class CommentService
 
         return Comment::format($comment);
     }
-
-    /*public function format($comment)
-    {
-        if ($comment === null)
-            return null;
-        if (($user = User::whereId($comment->user_id)->first()) !== null)
-            $comment['author'] = $user;
-        if (($koop = Koop::whereId($comment->koop_id)->first()) !== null)
-            $comment['koop'] = $koop;
-    }*/
 
 }
