@@ -33,11 +33,12 @@ Route::middleware(['cors'])->group(function () {
     Route::post('/mail/contact', 'MailController@contact'); // Contact us
 
     Route::get('/test', function (Request $request) {
-//        var_dump(\Carbon\Carbon::now());
+return storage_path();
+        /*//        var_dump(\Carbon\Carbon::now());
         $user = \App\User::first();
         $collection = collect($user->notifications);
 //        var_dump($user->notifications->items);
-        return view('pages.emails.koop.accept');
+        return view('pages.emails.koop.accept');*/
     })->name('test');
 
 
@@ -59,6 +60,7 @@ Route::middleware(['cors'])->group(function () {
         Route::get('/koops/mine', 'KoopController@findAllMine'); // Get all user koops
         Route::get('/koops/available', 'KoopController@findAllAvailable'); // Get my koops
         Route::get('/koop/{author}/{id}', 'KoopController@getKoopByAuthorAndId');
+        Route::get('/koops/{author}', 'KoopController@getKoopsByAuthor');
         Route::get('/koops/location/{latitude}/{longitude}/{radius}', 'KoopController@getKoopsByLocation');
 //        Route::get('/koop/available', 'KoopController@findAllAvailable'); // Get all koops
         Route::post('/koop', 'KoopController@store'); // Store koops
@@ -78,6 +80,8 @@ Route::middleware(['cors'])->group(function () {
         Route::post('/diploma', 'DiplomaController@store');
 
         Route::post('/comments', 'CommentController@store');
+
+        Route::get('/nannies', 'NannyController@all');
 
         /**
          * Routes génériques
