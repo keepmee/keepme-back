@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Helpers;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -27,4 +29,37 @@ use Illuminate\Database\Eloquent\Model;
 class Nanny extends Model
 {
     protected $fillable = ['description', 'user_id', 'is_verified'];
+
+    public static function formatAll($nannies, $options = null)
+    {
+        if ($nannies !== null) {
+            foreach ($nannies as $index => $nanny) {
+                $nannies[$index] = self::format($nanny, $options);
+            }
+            $nannies = json_decode(json_encode($nannies), true);
+            usort($nannies, function ($a, $b) {
+                return $a['distance'] > $b['distance'];
+            });
+        }
+        return $nannies;
+    }
+
+    public static function format($nanny, $options = null)
+    {
+        if ($nanny !== null) {
+            $nannyUser = User::whereId($nanny->user_id)->first();
+            $nannyUser['address'] = Address::whereId($nannyUser->address_id)->first();
+            $nanny['user'] = $nannyUser;
+            if ($options !== null) {
+                if ($options['user'] !== null) {
+                    if ($options['distance'])
+                        $nanny['distance'] = Helpers::distanceBetweenAddresses(Address::whereId($options['user']->address_id)->first(), Address::whereId($nannyUser->address_id)->first());
+                }
+                if ($options['koops']) {
+                    $nanny['koops'] = Koop::whereNannyId($nanny->id)->get();
+                }
+            }
+        }
+        return $nanny;
+    }
 }
