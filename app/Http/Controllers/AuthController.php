@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers;
+use App\Models\Address;
 use App\Models\Nanny;
 use App\Models\Parents;
 use App\Services\Auth\AuthService;
@@ -102,6 +103,7 @@ class AuthController extends Controller
                 "firstname" => $user->firstname ?? Auth()->user()->firstname,
                 "lastname"  => $user->lastname ?? Auth()->user()->lastname,
                 "image"     => $user->image ?? Auth()->user()->image,
+                "address"   => Address::whereId($user->address_id ?? Auth()->user()->address_id)->first(),
                 "role"      => $user ? $user->getRole() : (($tmp = User::whereEmail(Auth()->user()->email)->first()) === null ? null : $tmp->getRole() ?? null)
             ],
             "token" => ['content' => $token, 'type' => 'bearer', 'expires' => auth()->factory()->getTTL() * 60]
