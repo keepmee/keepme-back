@@ -61,7 +61,6 @@ class ChildrenService
 
     public function getParent(User $user, $data = null, $checkData = true)
     {
-        LogService::info($checkData);
         if ($data === null && $checkData === true)
             return ReturnServices::badRequest();
 

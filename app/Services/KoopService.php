@@ -31,13 +31,16 @@ class KoopService
         if ($user === null || ($user = User::whereEmail($user->email)->first()) === null)
             return ReturnServices::unauthorized();
 
+        if (($parent = Parents::whereUserId($user->id)->first()) === null)
+            return ReturnServices::forbidden();
+
         if (($address = Address::whereId($user->address_id)->first()) === null)
             $addressId = 1;
         else $addressId = $address->id;
 
         $children = [];
         foreach ($data->children as $child) {
-            if (($tmp = Children::whereParentId($user->id)->whereId($child)->first()) !== null)
+            if (($tmp = Children::whereParentId($parent->id)->whereId($child)->first()) !== null)
                 $children[] = $tmp->id;
         }
 
@@ -68,7 +71,6 @@ class KoopService
         if ($user === null || ($user = User::whereEmail($user->email)->first()) === null)
             return ReturnServices::unauthorized();
 
-
         if (($parent = Parents::whereUserId($user->id)->first()) === null) {
             if (($koopApplications = KoopApplication::whereNannyId(Nanny::whereUserId($user->id)->first()->id)->get()) === null)
                 return null;
@@ -86,7 +88,7 @@ class KoopService
         );
     }
 
-    public function getKoopByAuthorAndId($author, $id)
+    public function getKoopByAuthorAndId($author, $id = null)
     {
         if (is_string($author) && (!($firstname = explode(".", $author)[0]) || !($lastname = explode(".", $author)[1])))
             return ReturnServices::badRequest();
@@ -94,6 +96,16 @@ class KoopService
         if (($user = User::whereFirstname($firstname)->whereLastname($lastname)->first()) === null || ($koop = Koop::whereId($id)->first()) === null || ($user = User::whereId($koop->user_id)->first()) === null)
             return ReturnServices::notFound([$user, $koop ?? null]);
         return $this->formatKoop($koop);
+    }
+
+    public function getKoopsByAuthor($author)
+    {
+        if (is_string($author) && (!($firstname = explode(".", $author)[0]) || !($lastname = explode(".", $author)[1])))
+            return ReturnServices::badRequest();
+
+        if (($user = User::whereFirstname($firstname)->whereLastname($lastname)->first()) === null || ($koops = Koop::whereUserId($user->id)->get()) === null)
+            return ReturnServices::notFound([$firstname, $lastname, $user, $koop ?? null]);
+        return ($nanny = Nanny::whereUserId($user->id)->first()) !== null ? $this->formatKoops(Koop::whereNannyId($nanny->id)->get()) : $this->formatKoops($koops);
     }
 
     public function getKoopsByLocation($latitude, $longitude, $radius)
@@ -108,28 +120,14 @@ class KoopService
 
     public function formatKoops($koops, $center = null)
     {
-        if ($koops !== null)
+        return Koop::formatAll($koops, $center);
+        /*if ($koops !== null)
             foreach ($koops as $index => $koop) {
-                /*if (($address = Address::where('id', $koop->getAttributeValue('address_id'))->first()) !== null)
-                    $koops[$index]->location = ['lat' => ((double)$address->latitude), 'lng' => ((double)$address->longitude)];
-                if (($user = User::where('id', $koop->getAttributeValue('user_id'))->first()) !== null) {
-                    $koops[$index]->author = $user;
-                    unset($koops[$index]->author->password);
-                }
-                if (($address = Address::whereId($koop->getAttributeValue('address_id'))->first()) !== null)
-                    $koops[$index]->address = $address;
-                $children = json_decode($koop->children);
-                foreach ($children as $idx => $child) {
-                    if (($tmp = Children::whereId($child)->first()) !== null)
-                        $children[$idx] = $tmp;
-                }
-                $koops[$index]->enfants = $children;*/
                 $koops[$index] = $this->formatKoop($koop, $center);
-                LogService::info(($koops[$index]['distance']));
                 if (($radius = ($center && $center->radius ? $center->radius : 10000)) && ((int)$koops[$index]['distance']) > $radius)
                     unset($koops[$index]);
             }
-        return $koops;
+        return $koops;*/
     }
 
     public function formatKoop(Koop $koop, $center = null)
@@ -159,7 +157,6 @@ class KoopService
         $koop['enfants'] = $children;
         $koop['children'] = $children;
 
-        LogService::debug(json_encode("ntm"));
         $koop['comments'] = Comment::findByKoopId($koop->id);
 
         return $koop;*/

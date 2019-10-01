@@ -24,7 +24,6 @@ class AddressService
 
     public function getUserLocation(User $user)
     {
-        LogService::info(json_encode($user));
         return $user === null || (($user = User::whereEmail($user->email)->first()) === null) ? ReturnServices::unauthorized() : $this->getLocation($user->getAttributeValue('address_id'));
     }
 

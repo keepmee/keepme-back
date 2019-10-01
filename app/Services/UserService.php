@@ -20,8 +20,6 @@ class UserService
         if ($user === null || ($user = User::whereEmail($user->email)->first()) === null)
             return ReturnServices::unauthorized();
 
-        LogService::info($user->id . " - " . $id);
-
         if (((int)$user->id) !== ((int)$id))
             return ReturnServices::forbidden();
 

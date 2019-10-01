@@ -36,7 +36,6 @@ class Comment extends Model
 
     public static function findByKoopId($koopId)
     {
-        LogService::info(json_encode(Comment::whereKoopId($koopId)->get()));
         return self::formatAll(Comment::whereKoopId($koopId)->get());
     }
 

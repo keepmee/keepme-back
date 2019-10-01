@@ -64,7 +64,6 @@ class DiplomaService
                     $diplomas[$index]->type = strpos(\File::mimeType($diploma->path), "image") === false
                         ? strpos(\File::mimeType($diploma->path), "pdf") === false ? null : "pdf"
                         : "image";
-                    LogService::info(strpos(\File::mimeType($diploma->path), "image"));
                 }
             }
         return $diplomas;

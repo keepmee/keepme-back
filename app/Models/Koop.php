@@ -48,6 +48,23 @@ class Koop extends Model
 {
     protected $fillable = ["title", "description", "note", "rate", "recurrent", "children", "user_id", "address_id", "start", "end", "nanny_id"];
 
+
+    public static function formatAll($koops, $center = null)
+    {
+        if ($koops !== null) {
+            foreach ($koops as $index => $koop) {
+                $koops[$index] = self::format($koop, $center);
+                if (($radius = ($center && $center->radius ? $center->radius : 10000)) && ((int)$koops[$index]['distance']) > $radius)
+                    unset($koops[$index]);
+            }
+            $koops = json_decode(json_encode($koops), true);
+            usort($koops, function ($a, $b) {
+                return $a['distance'] > $b['distance'];
+            });
+        }
+        return $koops;
+    }
+
     public static function format(Koop $koop, $center = null)
     {
         if ($koop === null)
@@ -64,7 +81,7 @@ class Koop extends Model
         if ($address !== null && ($addressTmp = Address::whereId(\Auth::user()->address_id)->first()) !== null)
             $koop['distance'] = $center === null
                 ? Helpers::distance((double)$address->latitude, (double)$address->longitude, (double)$addressTmp->latitude, (double)$addressTmp->longitude)
-                : Helpers::distance((double)$center->latitude, (double)$center->longitude, (double)$addressTmp->latitude, (double)$addressTmp->longitude);
+                : Helpers::distance((double)$center->latitude, (double)$center->longitude, (double)$address->latitude, (double)$address->longitude);
         $koop['duration'] = Carbon::parse($koop->end)->diffInHours(Carbon::parse($koop->start)) . "h" . Carbon::parse($koop->end)->diff(Carbon::parse($koop->start))->format("%I");
 
         $children = is_array($koop->children) ? $koop->children : json_decode($koop->children);
