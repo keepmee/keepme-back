@@ -53,14 +53,14 @@ class Handler extends ExceptionHandler
         if ($exception instanceof UnauthorizedHttpException) {
             $preException = $exception->getPrevious();
             if ($preException instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
-                return Response::error(401, ['error' => 'TOKEN_EXPIRED']);
+                return Response::error(401, "Votre session a expiré, veuillez vous reconnecter");
             } else if ($preException instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
-                return Response::error(401, ['error' => 'TOKEN_INVALID']);
+                return Response::error(401, "Merci de bien vouloir vous reconnecter");
             } else if ($preException instanceof \Tymon\JWTAuth\Exceptions\TokenBlacklistedException) {
                 return Response::error(401, ['error' => 'TOKEN_BLACKLISTED']);
             }
             if ($exception->getMessage() === 'Token not provided') {
-                return response()->json(['error' => 'Token not provided']);
+                return Response::error(401);
             }
         }
 
