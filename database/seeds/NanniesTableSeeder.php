@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Nanny;
 use App\User;
 use Illuminate\Database\Seeder;
 
@@ -19,5 +20,13 @@ class NanniesTableSeeder extends Seeder
                     'is_verified' => true
                 ]);
         }
+
+        Nanny::create([
+            'user_id' => User::whereEmail('dasilv_b@etna-alternance.net')->first()->id
+        ]);
+
+        Nanny::create([
+            'user_id' => User::whereEmail('elhorm_n@etna-alternance.net')->first()->id
+        ]);
     }
 }
