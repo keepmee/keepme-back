@@ -37,6 +37,7 @@ class UsersTableSeeder extends Seeder
             'password'  => sha1('toto'),
             'birthday'  => null,
             'is_active' => true,
+            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id
         ]);
 
         User::create([
@@ -45,8 +46,9 @@ class UsersTableSeeder extends Seeder
             'email'     => 'elhorm_n@etna-alternance.net',
             'phone'     => '01.02.03.04.05',
             'password'  => sha1('toto'),
-            'birthday'  => null,
+            'birthday'  => '1995-04-23',
             'is_active' => true,
+            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id
         ]);
 
         User::create([
@@ -57,6 +59,7 @@ class UsersTableSeeder extends Seeder
             'password'  => sha1('toto'),
             'birthday'  => null,
             'is_active' => true,
+            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id
         ]);
 
         User::create([
@@ -65,8 +68,9 @@ class UsersTableSeeder extends Seeder
             'email'     => 'dasilv_b@etna-alternance.net',
             'phone'     => '01.02.03.04.05',
             'password'  => sha1('toto'),
-            'birthday'  => null,
+            'birthday'  => '1996-07-23',
             'is_active' => true,
+            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id
         ]);
 
         User::create([
@@ -77,6 +81,7 @@ class UsersTableSeeder extends Seeder
             'password'  => sha1('toto'),
             'birthday'  => null,
             'is_active' => true,
+            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id
         ]);
 
         User::create([
@@ -87,6 +92,7 @@ class UsersTableSeeder extends Seeder
             'password'  => sha1('toto'),
             'birthday'  => null,
             'is_active' => true,
+            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id
         ]);
         /********************************
          ********************************
