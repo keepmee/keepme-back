@@ -24,7 +24,7 @@ class ParentsTableSeeder extends Seeder
         ]);
 
         Parents::create([
-            'user_id' => User::whereEmail('ayad_a@etna-alternance.net')->first()->id
+            'user_id' => User::whereEmail('ayad_y@etna-alternance.net')->first()->id
         ]);
 
         Parents::create([
