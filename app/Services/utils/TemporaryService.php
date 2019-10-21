@@ -55,8 +55,16 @@ class TemporaryService
         $faker = \Faker\Factory::create('fr_FR');
         $date = $faker->dateTimeThisCentury;
         $date->setDate(random_int($min, $max), (int)$date->format('m'), (int)$date->format('d'));
-        return $date->format(("Y-m-d"));
+        return $date;
 
+    }
+
+    public static function generateCreated()
+    {
+        $faker = \Faker\Factory::create('fr_FR');
+        $date = $faker->dateTimeThisCentury;
+        $date->setDate(2019, random_int(8, 10), (int)$date->format('d'));
+        return $date;
     }
 
 }

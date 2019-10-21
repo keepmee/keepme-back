@@ -19,10 +19,11 @@ class ChildrenTableSeeder extends Seeder
                     $nb = $faker->numberBetween(1, 3);
                     for ($i = 0; $i < $nb; $i++)
                         \App\Models\Children::create([
-                            "firstname" => mb_strtolower(\App\Services\utils\TemporaryService::replaceUtf8Char(utf8_encode($faker->firstName))),
-                            "lastname"  => \App\User::whereId($parent->getAttributeValue('user_id'))->first()->lastname,
-                            "birthday"  => \App\Services\utils\TemporaryService::generateBirthday(2010, 2018),
-                            "parent_id" => $parent->getAttributeValue('id')
+                            "firstname"  => mb_strtolower(\App\Services\utils\TemporaryService::replaceUtf8Char(utf8_encode($faker->firstName))),
+                            "lastname"   => \App\User::whereId($parent->getAttributeValue('user_id'))->first()->lastname,
+                            "birthday"   => \App\Services\utils\TemporaryService::generateBirthday(2010, 2018)->format('Y-m-d'),
+                            "parent_id"  => $parent->getAttributeValue('id'),
+                            "created_at" => \App\Services\utils\TemporaryService::generateCreated(),
                         ]);
                 }
             }

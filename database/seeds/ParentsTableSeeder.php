@@ -16,19 +16,23 @@ class ParentsTableSeeder extends Seeder
         if (($users = User::where('email', 'NOT LIKE', '%etna-alternance.net%')->whereNull('birthday')->get()) !== null) {
             foreach ($users as $user)
                 Parents::create([
-                    'user_id' => $user->getAttributeValue('id')
+                    'user_id'    => $user->getAttributeValue('id'),
+                    'created_at' => \App\Services\utils\TemporaryService::generateCreated()
                 ]);
         }
         Parents::create([
-            'user_id' => User::whereEmail('akbly_s@etna-alternance.net')->first()->id
+            'user_id'    => User::whereEmail('akbly_s@etna-alternance.net')->first()->id,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         Parents::create([
-            'user_id' => User::whereEmail('ayad_y@etna-alternance.net')->first()->id
+            'user_id'    => User::whereEmail('ayad_y@etna-alternance.net')->first()->id,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         Parents::create([
-            'user_id' => User::whereEmail('benito_a@etna-alternance.net')->first()->id
+            'user_id'    => User::whereEmail('benito_a@etna-alternance.net')->first()->id,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
     }
 }

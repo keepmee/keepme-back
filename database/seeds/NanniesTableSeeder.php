@@ -17,16 +17,21 @@ class NanniesTableSeeder extends Seeder
             foreach ($users as $user)
                 \App\Models\Nanny::create([
                     'user_id'     => $user->getAttributeValue('id'),
-                    'is_verified' => true
+                    'is_verified' => true,
+                    'created_at' => \App\Services\utils\TemporaryService::generateCreated()
                 ]);
         }
 
         Nanny::create([
-            'user_id' => User::whereEmail('dasilv_b@etna-alternance.net')->first()->id
+            'user_id'     => User::whereEmail('dasilv_b@etna-alternance.net')->first()->id,
+            'is_verified' => true,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         Nanny::create([
-            'user_id' => User::whereEmail('elhorm_n@etna-alternance.net')->first()->id
+            'user_id'     => User::whereEmail('elhorm_n@etna-alternance.net')->first()->id,
+            'is_verified' => true,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
     }
 }

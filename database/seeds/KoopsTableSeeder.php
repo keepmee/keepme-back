@@ -33,7 +33,8 @@ class KoopsTableSeeder extends Seeder
                         "children"    => json_encode($children),
                         "user_id"     => $user->id,
                         "nanny_id"    => $faker->numberBetween(0, 3) <= 2 ? null : \App\Models\Nanny::whereId($faker->numberBetween(1, \App\Models\Nanny::count() - 1))->first()->id, // random nanny id or null
-                        "address_id"  => $user->address_id // user address_id
+                        "address_id"  => $user->address_id,// user address_id
+                        'created_at'  => \App\Services\utils\TemporaryService::generateCreated()
                     ]);
                 }
             }

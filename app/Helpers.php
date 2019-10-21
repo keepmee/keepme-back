@@ -97,10 +97,10 @@ class Helpers
         return (float)round((($unit = strtoupper($unit)) === "M" ? ($kilometers * 1000.0) : $kilometers), 2);
     }
 
-    public static function distanceBetweenAddresses(Address $address1, $address2, $unit = "K")
+    public static function distanceBetweenAddresses($address1, $address2, $unit = "K")
     {
         if ($address1 === null || $address2 === null)
-            return 0;
+            return null;
         return self::distance((double)$address1->latitude, (double)$address1->longitude, (double)$address2->latitude, (double)$address2->longitude, $unit);
     }
 }

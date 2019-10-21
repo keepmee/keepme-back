@@ -26,7 +26,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('toto'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id
+            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -37,7 +38,8 @@ class UsersTableSeeder extends Seeder
             'password'  => sha1('toto'),
             'birthday'  => null,
             'is_active' => true,
-            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id
+            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -48,7 +50,8 @@ class UsersTableSeeder extends Seeder
             'password'  => sha1('toto'),
             'birthday'  => '1995-04-23',
             'is_active' => true,
-            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id
+            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -59,7 +62,8 @@ class UsersTableSeeder extends Seeder
             'password'  => sha1('toto'),
             'birthday'  => null,
             'is_active' => true,
-            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id
+            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -70,7 +74,8 @@ class UsersTableSeeder extends Seeder
             'password'  => sha1('toto'),
             'birthday'  => '1996-07-23',
             'is_active' => true,
-            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id
+            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -81,7 +86,8 @@ class UsersTableSeeder extends Seeder
             'password'  => sha1('toto'),
             'birthday'  => null,
             'is_active' => true,
-            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id
+            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -92,7 +98,8 @@ class UsersTableSeeder extends Seeder
             'password'  => sha1('toto'),
             'birthday'  => null,
             'is_active' => true,
-            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id
+            'address_id' => \App\Models\Address::whereLatitude('50.3549826')->whereLongitude('3.1252909')->first()->id,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
         /********************************
          ********************************
@@ -108,7 +115,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('_+2gm&R'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 26
+            'address_id' => 26,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -119,7 +127,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1(',"&_ze~ZL[]!i_?'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 19
+            'address_id' => 19,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -130,7 +139,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('s~P!{,hi#jj+{MIR#*xt'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 15
+            'address_id' => 15,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -141,7 +151,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('e/g3|ax3DOVv>ws>YE8w'),
             'birthday'   => '1992-02-25',
             'is_active'  => true,
-            'address_id' => 55
+            'address_id' => 55,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -152,7 +163,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('?4,an=T#<5d%<6R'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 37
+            'address_id' => 37,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -163,7 +175,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('cO|7t|Ju2uOT}l'),
             'birthday'   => '1995-03-19',
             'is_active'  => true,
-            'address_id' => 18
+            'address_id' => 18,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -174,7 +187,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('ClV$KyF'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 23
+            'address_id' => 23,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -185,7 +199,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('2NruO${JDu=/<m+qx)P!'),
             'birthday'   => '1994-05-12',
             'is_active'  => true,
-            'address_id' => 57
+            'address_id' => 57,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -196,7 +211,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('G],Hqy.+JH=kK6cp:'),
             'birthday'   => '1981-09-18',
             'is_active'  => true,
-            'address_id' => 24
+            'address_id' => 24,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -207,7 +223,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('$Os[Ij[=h>'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 43
+            'address_id' => 43,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -218,7 +235,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('~5R=<{]aNO'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 14
+            'address_id' => 14,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -229,7 +247,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('SLN\'5`"N|3MG!;I\\?'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 34
+            'address_id' => 34,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -240,7 +259,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('v70cC8I?Y'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 22
+            'address_id' => 22,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -251,7 +271,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('[$h5Ad""gs$NZ<}'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 56
+            'address_id' => 56,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -262,7 +283,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('Q?-pKdc?+kfmbY'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 25
+            'address_id' => 25,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -273,7 +295,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('L>r$2K]Sdhr'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 32
+            'address_id' => 32,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -284,7 +307,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('+Z.iNH'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 48
+            'address_id' => 48,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -295,7 +319,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('Ei3j.b*f+1IaZj\\fhN@'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 17
+            'address_id' => 17,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -306,7 +331,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('Tpq;T(x*iDdMQ|'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 10
+            'address_id' => 10,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -317,7 +343,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('R3|PF~7b'),
             'birthday'   => '1985-11-01',
             'is_active'  => true,
-            'address_id' => 44
+            'address_id' => 44,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -328,7 +355,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('L!|K}_PH@'),
             'birthday'   => '1983-10-15',
             'is_active'  => true,
-            'address_id' => 51
+            'address_id' => 51,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -339,7 +367,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('Q1xu%O1L[8a)o%ft$Ep'),
             'birthday'   => '1984-08-04',
             'is_active'  => true,
-            'address_id' => 16
+            'address_id' => 16,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -350,7 +379,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('ck{ppNI7&u)|Q\''),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 46
+            'address_id' => 46,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -361,7 +391,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1(';y5tUC;'),
             'birthday'   => '1996-10-03',
             'is_active'  => true,
-            'address_id' => 50
+            'address_id' => 50,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -372,7 +403,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('jkI@J``G#l'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 49
+            'address_id' => 49,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -383,7 +415,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('uLFyR*DLkCO*O}~sly'),
             'birthday'   => '1985-10-31',
             'is_active'  => true,
-            'address_id' => 53
+            'address_id' => 53,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -394,7 +427,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('i%$VJ(T~LR},'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 33
+            'address_id' => 33,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -405,7 +439,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1(',{4rQw5_3?;(g8+'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 21
+            'address_id' => 21,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -416,7 +451,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('oE\\~]-'),
             'birthday'   => '1989-04-17',
             'is_active'  => true,
-            'address_id' => 2
+            'address_id' => 2,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -427,7 +463,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('=~f6q9MmZpb?EEVPez'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 4
+            'address_id' => 4,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -438,7 +475,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('<fVzOY-9aG!fX=Eh'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 52
+            'address_id' => 52,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -449,7 +487,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('(iZ$r%`su='),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 36
+            'address_id' => 36,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -460,7 +499,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('&pp_{ntQrBp0v_lC$w_'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 8
+            'address_id' => 8,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -471,7 +511,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('\'$Cps`W0,%QC`Oc-)A'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 41
+            'address_id' => 41,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -482,7 +523,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('|$,["%Gj'),
             'birthday'   => '1985-01-09',
             'is_active'  => true,
-            'address_id' => 9
+            'address_id' => 9,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -493,7 +535,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('yh"zCl.a}'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 28
+            'address_id' => 28,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -504,7 +547,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('[ibAd6M{zF'),
             'birthday'   => '1985-08-25',
             'is_active'  => true,
-            'address_id' => 54
+            'address_id' => 54,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -515,7 +559,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('6ZFe;vD@\''),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 45
+            'address_id' => 45,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -526,7 +571,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('p@caIlC\\Ix71m9]'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 35
+            'address_id' => 35,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -537,7 +583,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('5]HrBsY+n#)#UPt:%\'|k'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 20
+            'address_id' => 20,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -548,7 +595,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1(']r{}%TnK#$r}x\\rnU'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 12
+            'address_id' => 12,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -559,7 +607,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('w`|Ov-`VF'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 47
+            'address_id' => 47,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -570,7 +619,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('7^D?#^:n'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 40
+            'address_id' => 40,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -581,7 +631,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('pT\\<{If?t{HR'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 13
+            'address_id' => 13,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -592,7 +643,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('EC^f/W\'}5xQew`=a<m'),
             'birthday'   => '1984-11-04',
             'is_active'  => true,
-            'address_id' => 29
+            'address_id' => 29,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -603,7 +655,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('-5.=RV'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 30
+            'address_id' => 30,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -614,7 +667,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('U@e3%~e8w'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 11
+            'address_id' => 11,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -625,7 +679,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('|R<AwL&e(S:)/J;XP^'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 6
+            'address_id' => 6,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -636,7 +691,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('a%JN%WlD/&69Z)'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 39
+            'address_id' => 39,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -647,7 +703,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('d8!~K%o^L1;q6aE6P]{'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 38
+            'address_id' => 38,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -658,7 +715,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('!D%<U|&)oQkYZZ0T'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 3
+            'address_id' => 3,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
         User::create([
@@ -669,7 +727,8 @@ class UsersTableSeeder extends Seeder
             'password'   => sha1('*(f85Hd>N\\x0k)x</0XE'),
             'birthday'   => null,
             'is_active'  => true,
-            'address_id' => 27
+            'address_id' => 27,
+            'created_at' => \App\Services\utils\TemporaryService::generateCreated()
         ]);
 
 
