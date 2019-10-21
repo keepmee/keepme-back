@@ -32,16 +32,6 @@ Route::middleware(['cors'])->group(function () {
 
     Route::post('/mail/contact', 'MailController@contact'); // Contact us
 
-    Route::get('/test', function (Request $request) {
-return storage_path();
-        /*//        var_dump(\Carbon\Carbon::now());
-        $user = \App\User::first();
-        $collection = collect($user->notifications);
-//        var_dump($user->notifications->items);
-        return view('pages.emails.koop.accept');*/
-    })->name('test');
-
-
     Route::middleware(['jwt.auth'])->group(function () {
 
         Route::get('/users/current', 'UserController@getCurrentUser'); // Get current user
