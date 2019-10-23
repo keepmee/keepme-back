@@ -16,24 +16,4 @@ class ChildrenTest extends TestCase
 
         $response->assertStatus(200);
     }
-
-    public function testAddChildren()
-    {
-        $response = $this->json('POST', '/api/children', [
-           'data' => [
-                'lastname'  => 'AYAD',
-                'firstname' => 'Samir',
-                'birthday'  => '2019-03-06',
-                'notes'     => null
-           ]
-        ], ['Authorization' => 'Bearer ' . $this->token]);
-
-        $return = $response->baseResponse->original;
-
-        $this->assertJsonStringEqualsJsonFile(__DIR__ . '/../results/create_children.json', json_encode($return['data']));
-
-        $response->assertStatus(200);
-
-        echo json_encode($response);die;
-    }
 }
