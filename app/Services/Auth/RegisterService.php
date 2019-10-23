@@ -29,6 +29,7 @@ class RegisterService extends AuthService
                 'is_active'  => false,
                 'address_id' => null
             ]);
+        else return ReturnServices::toArray(419, "Un compte existe déjà avec cette addresse mail");
 
         if ($data->role === 'nanny')
             $role = new Nanny(["is_verified" => false, 'user_id' => $user->id]);
@@ -36,7 +37,8 @@ class RegisterService extends AuthService
 
         $role->save();
 
-        MailService::register($user);
+        if (MailService::register($user) === 1)
+            $user->update(['is_active' => true]);
 
         return $this->generateToken($user, $data->password, true);
     }
