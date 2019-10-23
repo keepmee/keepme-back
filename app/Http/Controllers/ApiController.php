@@ -22,7 +22,7 @@ class ApiController extends Controller
      */
     private function models_exists($table)
     {
-        return Str::plural($table, 2) === 'users' ? class_exists("App\\" . Str::plural($table, 1)) : class_exists($this->namespace . Str::plural($table, 1));
+        return Str::plural($table, 1) === 'users' ? class_exists("App\\" . 'User') : class_exists($this->namespace . Str::plural($table, 1));
     }
 
 
@@ -34,8 +34,14 @@ class ApiController extends Controller
      */
     public function findAll($table)
     {
-        if (($table = Str::plural($table)) && $this->models_exists(Str::singular($table)))
-            return Response::success(200, [$table => DB::table(strtolower($table))->select('*')->get()]);
+        if ($table !== "users") {
+            if (($table = Str::plural($table)) && $this->models_exists(Str::singular($table)))
+                return Response::success(200, [$table => DB::table(strtolower($table))->select('*')->get()]);
+        } else {
+            if (($table = Str::plural($table)) || $this->models_exists(Str::singular($table)))
+                return Response::success(200, [$table => DB::table(strtolower($table))->select('*')->get()]);
+        }
+
         return Response::error(500, "La table " . $this->namespace . $table . " n'existe pas");
     }
 

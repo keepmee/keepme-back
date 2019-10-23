@@ -14,7 +14,7 @@ class AddCommentsTargetId extends Migration
     public function up()
     {
         Schema::table('comments', function (Blueprint $table) {
-            $table->json('targets')->after('koop_id')->nullable();
+            $table->text('targets')->after('koop_id')->nullable();
         });
     }
 
