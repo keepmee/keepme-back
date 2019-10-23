@@ -22,7 +22,7 @@ class ApiController extends Controller
      */
     private function models_exists($table)
     {
-        return class_exists($this->namespace . Str::plural($table, 1));
+        return Str::plural($table, 2) === 'users' ? class_exists("App\\" . Str::plural($table, 1)) : class_exists($this->namespace . Str::plural($table, 1));
     }
 
 
