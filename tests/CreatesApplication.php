@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use DateTime;
 use Illuminate\Contracts\Console\Kernel;
 
 trait CreatesApplication

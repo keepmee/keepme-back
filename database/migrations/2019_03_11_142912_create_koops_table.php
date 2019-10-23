@@ -22,7 +22,7 @@ class CreateKoopsTable extends Migration
             $table->dateTime('end');
             $table->double('rate');
             $table->boolean('recurrent')->default(false);
-            $table->json('children');
+            $table->text('children')->nullable();
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('nanny_id')->nullable()->unsigned();
             $table->bigInteger('address_id')->unsigned();

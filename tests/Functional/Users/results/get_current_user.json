@@ -1,0 +1,15 @@
+{
+    "user": {
+        "id": 2,
+        "firstname": "ayad",
+        "lastname": "yanis",
+        "email": "ayad_y@etna-alternance.net",
+        "phone": "01.02.03.04.05",
+        "birthday": null,
+        "is_active": 1,
+        "address_id": 1,
+        "image": null,
+        "created_at": "2019-10-31 18:31:19",
+        "updated_at": "2019-10-22 18:16:31"
+    }
+}

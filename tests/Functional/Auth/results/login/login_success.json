@@ -1,0 +1,20 @@
+{
+    "id": 2,
+    "email": "ayad_y@etna-alternance.net",
+    "firstname": "ayad",
+    "lastname": "yanis",
+    "image": null,
+    "address": {
+        "id": 1,
+        "address_line1": "6 Rue Victor Hugo",
+        "address_line2": null,
+        "postcode": 59187,
+        "country": "FR",
+        "city": "Dechy",
+        "latitude": "50.3549826",
+        "longitude": "3.1252909",
+        "created_at": "2019-10-22 18:16:30",
+        "updated_at": "2019-10-22 18:16:30"
+    },
+    "role": "parent"
+}

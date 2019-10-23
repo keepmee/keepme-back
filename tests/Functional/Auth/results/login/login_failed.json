@@ -1,0 +1,6 @@
+{
+    "status": 401,
+    "data": {
+        "error": "Le nom d'utilisateur ou l'adresse mail n'existe pas"
+    }
+}

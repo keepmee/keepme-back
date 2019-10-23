@@ -53,7 +53,11 @@ class Nanny extends Model
             if ($options !== null) {
                 if ($options['user'] !== null) {
                     if ($options['distance'])
-                        $nanny['distance'] = Helpers::distanceBetweenAddresses(Address::whereId($options['user']->address_id)->first(), Address::whereId($nannyUser->address_id)->first());
+                        $nanny['distance'] =
+                            Helpers::distanceBetweenAddresses(
+                                Address::whereId($options['user']->address_id)->first(),
+                                Address::whereId($nannyUser->address_id)->first()
+                            );
                 }
                 if ($options['koops']) {
                     $nanny['koops'] = Koop::whereNannyId($nanny->id)->get();
