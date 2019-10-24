@@ -21,8 +21,10 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property int $is_active
  * @property int|null $address_id
  * @property string|null $remember_token
+ * @property string|null $image
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Message[] $messages
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User newQuery()
@@ -33,6 +35,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereFirstname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereIsActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereLastname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePassword($value)
@@ -88,5 +91,10 @@ class User extends Authenticatable implements JWTSubject
         if (!empty($password)) {
             $this->attributes['password'] = bcrypt($password);
         }
+    }
+
+    public function messages()
+    {
+        return $this->hasMany('App\Models\Message');
     }
 }
