@@ -11,10 +11,11 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $content
- * @property string $title
+ * @property string|null $title
  * @property int $is_valid
  * @property int $user_id
  * @property int $koop_id
+ * @property mixed|null $targets
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Comment newModelQuery()
@@ -25,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Comment whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Comment whereIsValid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Comment whereKoopId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Comment whereTargets($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Comment whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Comment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Comment whereUserId($value)
