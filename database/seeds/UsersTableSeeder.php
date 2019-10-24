@@ -31,8 +31,8 @@ class UsersTableSeeder extends Seeder
         ]);
 
         User::create([
-            'firstname' => 'ayad',
-            'lastname'  => 'yanis',
+            'firstname' => 'yanis',
+            'lastname'  => 'ayad',
             'email'     => 'ayad_y@etna-alternance.net',
             'phone'     => '01.02.03.04.05',
             'password'  => sha1('toto'),
