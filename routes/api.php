@@ -34,6 +34,9 @@ Route::middleware(['cors'])->group(function () {
 
     Route::middleware(['jwt.auth'])->group(function () {
 
+        Route::get('/messages', 'MessageController@mine');
+        Route::post('/messages', 'MessageController@send');
+
         Route::get('/users/current', 'UserController@getCurrentUser'); // Get current user
         Route::get('/user/{lastname}/{firstname}/{type}', 'UserController@getUserByNameAndType');
         Route::put('/users/{id}', 'UserController@update'); // Update current user
