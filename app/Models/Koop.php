@@ -59,7 +59,7 @@ class Koop extends Model
             }
             $koops = json_decode(json_encode($koops), true);
             usort($koops, function ($a, $b) {
-                return $a['distance'] > $b['distance'];
+                return isset($a['distance']) && isset($b['distance']) ? $a['distance'] > $b['distance'] : -1;
             });
         }
         return $koops;
