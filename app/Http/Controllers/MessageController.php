@@ -37,6 +37,7 @@ class MessageController extends Controller
                 } else {
 //                    $conversation[$index]['person'] = $message->target_id === \Auth::user()->id ? $message->source() : $message->target();
                     $conversation[$index] = array(
+                        'id'       => $index,
                         'person'   => $message->target_id === \Auth::user()->id ? $message->source() : $message->target(),
                         "messages" => [$message]
                     );
